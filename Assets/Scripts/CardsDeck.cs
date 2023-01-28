@@ -18,6 +18,11 @@ public class CardsDeck : MonoBehaviour
         return card;
     }
 
+    public void TakeCard(Card card)
+    {
+        cards.Add(card);
+    }
+
     private void ShuffleDeck()
     {
         int Lastindex = cards.Count - 1;

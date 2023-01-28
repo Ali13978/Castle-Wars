@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] PlayerEconomyUI economyUI;
-    [SerializeField] CardsDeck cardsDeck;
+    public CardsDeck cardsDeck;
 
-    [SerializeField] List<GameObject> playerCardObjects;
+    public int PlayerNumber;
+
+    public List<GameObject> playerCardObjects;
 
     public int Builders = 2;
     public int Bricks = 5;
@@ -35,11 +38,25 @@ public class PlayerController : MonoBehaviour
             i.GetComponent<PlayerCard>().card = cardsDeck.GiveCard();
             i.GetComponent<PlayerCard>().DisplayCard();
             i.GetComponent<PlayerCard>().CheckUseablity(this);
-
+            i.GetComponent<Button>().interactable = true;
         }
     }
 
-    private void UpdateValues()
+    public void TurnStart()
+    {
+        IncreaseEconomyValue();
+        UpdateValues();
+
+        foreach (GameObject i in playerCardObjects)
+        {
+            i.GetComponent<PlayerCard>().DisplayCard();
+            i.GetComponent<PlayerCard>().CheckUseablity(this);
+            i.GetComponent<Button>().interactable = true;
+        }
+
+    }
+
+    public void UpdateValues()
     {
         economyUI.NoOfBuilders.text = Builders.ToString();
         economyUI.NoOfBricks.text = Bricks.ToString();
